@@ -13,10 +13,9 @@
 <?php
     require('./controller/memory_card_controller.php');
     $memoryController = new MemoryController;
-    //$cards = $memoryController->index();
     $memoryController->index();
-    //require('./views/memory_card_view.php');
-
+    
+    
 ?>
     
 </body>
