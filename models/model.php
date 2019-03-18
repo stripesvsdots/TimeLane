@@ -25,27 +25,32 @@ class Model {
         return $result;      
     }
 
-    public function saveToDB($table, $column1, $column2, $column3, $value1, $value2, $value3) {
+    public function saveToDB($table, $columns) {
         $conn = $this->connectDB();
         //write querry to save data
-        $query = 'INSERT INTO '. $table.'(';
+        $query = 'INSERT INTO '. $table. '(';
 
-        foreach($columns as $column){
-            $query.$column .', ';
-            
-        }
-        $query.') VALUES (';
+        foreach($columns as $column => $value){
+            $query.= $column .', ';
+        } 
+        $query = rtrim($query, " ");
+        $query = rtrim($query, ",");
+
+        $query.= ') VALUES (';
         foreach ($columns as $column => $value){
-            $query .$value. ', ';
+            $query .= '"'.$value.'" , ';
         }
-        $query.');';
-
-        mysqli_query($conn, $$query);
+        $query = rtrim($query, " ");
+        $query = rtrim($query, ",");
+        $query.= ');';
         
+
+        mysqli_query($conn, $query);
+
         if(mysqli_query($conn, $query)){
             echo "Records inserted successfully.";
         } else{
-            echo "ERROR: Could not able to execute $querry. " . mysqli_error($conn);
+            echo "ERROR: Could not able to execute $query. " . mysqli_error($conn);
         }
     
     }

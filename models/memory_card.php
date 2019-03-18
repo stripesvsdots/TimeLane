@@ -24,8 +24,18 @@ class MemoryCard extends Model {
 
         
     }
-    public function saveMemoryCardsToDB() {
-        $this->saveToDB('MemoryCards', 'EventDate', 'Title', 'Note', $date , $title, $note);
+    public function saveMemoryCardToDB() {
+        $time = strtotime($_POST['event_date']);
+        $eventDate = date("Y-m-d", $time);
+
+        $columns = [
+            'EventDate' => $eventDate,
+            'Title' => $_POST['title'],
+            'Note' => $_POST['note'],
+            'IdUser' => "1",
+            'IdEvent' => "2"
+        ];
+        $this->saveToDB('MemoryCards', $columns);
 
     }
 

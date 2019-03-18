@@ -10,6 +10,13 @@
             require ('views/memory_card_view.php');
         }
 
+        public function createMemoryCard(){
+            $card = new MemoryCard();
+            $card->saveMemoryCardToDB();
+            $cards = $card->loadMemoryCardsFromDB();
+            require ('views/memory_card_view.php');
+        }
+
         
     }
 ?>     
