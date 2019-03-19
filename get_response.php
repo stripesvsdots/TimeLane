@@ -13,9 +13,7 @@
 var_dump($_POST);
     require('./controller/memory_card_controller.php');
     $memoryController = new MemoryController;
-    $memoryController->createMemoryCard();
-    
-    
+    $memoryController->createMemoryCardFromPOST($_POST);
 ?>
     
 </body>

@@ -3,17 +3,22 @@
 
     class MemoryController {
         public function index() {
-            $card = new MemoryCard();
-            $cards = $card->loadMemoryCardsFromDB();
-           // $card->saveMemoryCardsToDB();
-
-            require ('views/memory_card_view.php');
+           $cards = MemoryCard::loadAllMemoryCardsFromDB();
+           require ('views/memory_card_view.php');
         }
 
-        public function createMemoryCard(){
-            $card = new MemoryCard();
-            $card->saveMemoryCardToDB();
-            $cards = $card->loadMemoryCardsFromDB();
+        public function createMemoryCardFromPOST($postData){
+            $card = new MemoryCard(null);
+            //get data from form
+            $card->title = $postData['title'];
+            $card->note = $postData['note'];
+            $card->eventDate = date("Y-m-d", strtotime($postData['event_date']));
+            $card->user_id = '1'; //the logged in user id
+            $card->event_id = '2';
+    
+            $card->saveToDB();
+
+            $cards = MemoryCard::loadAllMemoryCardsFromDB();
             require ('views/memory_card_view.php');
         }
 
