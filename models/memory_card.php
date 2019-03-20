@@ -2,8 +2,6 @@
 require_once ('./models/model.php');
 
 
-
-
 class MemoryCard extends Model {
     public $id = '';
     public $event_date = '';
@@ -54,6 +52,10 @@ class MemoryCard extends Model {
         } else {
             $this->updateToTable('MemoryCards', $this->id, $columns);
         }
+    }
+    public function deleteFromDB() {
+        $this->deleteFromTable('MemoryCards', $this->id);
+
     }
 
     public function isValid() {

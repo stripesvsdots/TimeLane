@@ -22,6 +22,12 @@
             require ('views/memory_card_view.php');
         }
 
+        public function deleteMemoryCard($id){
+            $card = new MemoryCard($id);
+            $card->deleteFromDB();
+        }
+
+
         
     }
 ?>     

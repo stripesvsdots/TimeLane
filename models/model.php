@@ -134,7 +134,7 @@ class Model {
         $this->connectDB();
         //query to delete rows into a table by id
         $sql = 'DELETE FROM '. $table. ' WHERE Id = '.$id;
-        mysqli($this->conn,  $query);
+        mysqli_query($this->conn,  $sql);
     }
 }   
 
