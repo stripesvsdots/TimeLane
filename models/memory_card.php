@@ -11,9 +11,10 @@ class MemoryCard extends Model {
     public $event_id = '';
     public $image = '';
     public $note = '';
+    public $max_date = '';
 
-    //constructor for id
-    public function __construct($id) {
+    //get the memory card id
+    public function associateWithDB($id) {
         $this->id = $id;
         if ($id != null) {
             $this->loadFromDB();
@@ -22,17 +23,23 @@ class MemoryCard extends Model {
 
     //get the Ids from Table and then construct a MemoryCard instance for each id with the constructor. The MemoryCard will retrieve the information from database, based on its ID. 
     public static function loadAllMemoryCardsFromDB() {
-        $sqlResults = Model::loadAllIdsFromTable('MemoryCards');
+        $sqlResults = Model::loadAllIdsFromTable('MemoryCards', 'EventDate');
         $result = array();
         foreach($sqlResults as $sqlResult) {
-            array_push($result, new MemoryCard($sqlResult['Id']));
+            $card = new MemoryCard();
+            $card->associateWithDB($sqlResult['Id']);
+            array_push($result, $card);
         }
         return $result;
     }
 
+    public static function deleteMemoryCardFromDB($id) {
+        deleteFromTable('MemoryCards', $id);
+    }
+
     public function loadFromDB() {
         $columns = $this->loadFromTable('MemoryCards', $this->id, null);
-        $this->eventDate = $columns['EventDate'];
+        $this->event_date = strtotime($columns['EventDate']);
         $this->title = $columns['Title'];
         $this->note = $columns['Note'];
         $this->user_id = $columns['IdUser'];
@@ -41,7 +48,7 @@ class MemoryCard extends Model {
 
     public function saveToDB() {
         $columns = [
-            'EventDate' => $this->eventDate,
+            'EventDate' => date("Y-m-d H:i:s", $this->event_date),
             'Title' => $this->title,
             'Note' => $this->note,
             'IdUser' => $this->user_id,
@@ -53,9 +60,9 @@ class MemoryCard extends Model {
             $this->updateToTable('MemoryCards', $this->id, $columns);
         }
     }
-    public function deleteFromDB() {
-        $this->deleteFromTable('MemoryCards', $this->id);
 
+    public function deleteFromDB() {
+        deleteFromTable('MemoryCards', $this->id);
     }
 
     public function isValid() {
@@ -67,6 +74,16 @@ class MemoryCard extends Model {
         }
         return true;
     }
+    public static function getMaxDate($table){
+        $this->connectDB();
+        //query to get the most recent date entry
+        $sql = 'SELECT MAX (EventDate) AS "Max Date" 
+        FROM '.$table.';';
+        return mysqli_query($this->conn, $sql);
+
+     
+    }
+
 }
 
 ?>

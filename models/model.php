@@ -1,6 +1,5 @@
 <?php
 
-
 class Model {
 
     public $conn = null;
@@ -16,13 +15,19 @@ class Model {
                 echo 'Connection error: ' . mysqli_connection_error();
             }
         }
+        
     }
 
-    public static function loadAllFromTable($table) {
+    public static function loadAllFromTable($table, $order_by = null) {
         $model = new Model();
         $model->connectDB();
         //write querry for all memory cards
-        $sql = 'SELECT * FROM '. $table . ';';
+        $sql = 'SELECT * FROM '. $table;
+        if ($order_by == null) {
+            $sql .= ';';
+        } else {
+            $sql .= ' ORDER BY '.$order_by.';';
+        }
 
         //make query & get result;
         $result = mysqli_query($model->conn, $sql);
@@ -68,7 +73,7 @@ class Model {
 
         $result = mysqli_query($this->conn, $query);
         if ($result){
-            echo "Records selected successfully.";
+            
         } else{
             echo "ERROR: Could not able to execute $query. " . mysqli_error($this->conn);
         }
@@ -123,19 +128,20 @@ class Model {
         $query .= ';';
 
         if (mysqli_query($this->conn, $query)){
-            echo "Records inserted successfully.";
+    
         } else{
             echo "ERROR: Could not able to execute $query. " . mysqli_error($this->conn);
         }
     }
 
     public function deleteFromTable($table, $id){
-        assert($id != null);
+       // assert($id != null);
         $this->connectDB();
         //query to delete rows into a table by id
         $sql = 'DELETE FROM '. $table. ' WHERE Id = '.$id;
-        mysqli_query($this->conn,  $sql);
+        mysqli_query($this->conn, $sql);
     }
+
 }   
 
 ?>

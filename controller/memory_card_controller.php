@@ -8,24 +8,28 @@
         }
 
         public function createMemoryCardFromPOST($postData){
-            $card = new MemoryCard(null);
+            $card = new MemoryCard();
             //get data from form
             $card->title = $postData['title'];
             $card->note = $postData['note'];
-            $card->eventDate = date("Y-m-d", strtotime($postData['event_date']));
+            $card->event_date = strtotime($postData['event_date']);
             $card->user_id = '1'; //the logged in user id
-            $card->event_id = '2';
+            $card->event_id = $postData['events'];
     
             $card->saveToDB();
 
             $cards = MemoryCard::loadAllMemoryCardsFromDB();
             require ('views/memory_card_view.php');
+
+            
         }
+        
 
         public function deleteMemoryCard($id){
-            $card = new MemoryCard($id);
-            $card->deleteFromDB();
+            MemoryCard::deleteMemoryCardFromDB($id);
         }
+
+
 
 
         
