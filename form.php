@@ -7,9 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- Compiled and minified CSS -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./style/style.css">
 
 
     <!--Let browser know website is optimized for mobile-->
@@ -19,10 +21,21 @@
 </head>
 
 <body>
+<br>
+<div class="row">
+        <div class="col s6"><img src="assets/images/Logo.png"></div>
+        <div class="col s6 right-align">
+            <div class="chip">
+                <img src="assets/images/chiuaua.png">
+                Anna Nomaly
+            </div>
+        </div>
+
+    </div>
     <section class="section container" id="memory card form">
         <form class="col s8" method="POST" action="get_response.php">
             <div class="row">
-                <h4 class="blue-grey-text text-darken-2"> Add a new memory </h4>
+                <h6 class="blue-grey-text text-darken-2"> Add a new memory </h6>
             </div>
             <div class="row">
                 <div class="input-field col s6">
@@ -45,15 +58,13 @@
                     <i class="material-icons prefix ">more_horiz</i>
                     <select name="events" id="events">
                         <option value="" disabled selected>Choose your option</option>
-                        <option value="1">lovelife</option>
-                        <option value="2">friendship</option>
-                        <option value="3">education</option>
-                        <option value="4">jobs</option>
-                        <option value="5">birthday party</option>
-                        <option value="6">party</option>
-                        <option value="7">concerts</option>
-                        <option value="8">movies</option>
-                        <option value="9">books</option>
+                        <?php
+                        require_once('./models/event.php');
+                        //print_r($all_events);    
+                        foreach($all_events as $key => $value) {                   
+                        echo '<option value = "'.$key.'">'.$value->name.'</option>';
+                        }
+                        ?>
                     </select>
                     <label>Event type</label>
                 </div>

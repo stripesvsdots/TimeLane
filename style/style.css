@@ -1,0 +1,52 @@
+.vis-timeline {
+    border: 2px solid lightgrey;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12pt;
+    background: transparent;
+  }
+
+  .vis-item {
+    border-color: rgb(184, 186, 187);
+    border-width: 1px;
+    border-radius: 20px;
+    background-color: rgb(255, 251, 252);
+    font-size: 12px;
+    color: rgb(0, 0, 0);
+    box-shadow: 5px 5px 20px rgba(128,128,128, 0.5);
+  }
+
+  .vis-item,
+  .vis-item.vis-line {
+    border-width: 3px;
+  }
+
+  .vis-item.vis-dot {
+    color: #41B3A3;
+    border-width: 10px;
+    border-radius: 20px;
+  }
+
+  .vis-item.vis-selected {
+    border-color: #E27D60;
+    background-color: #e8a87C;
+  }
+
+  .vis-time-axis .vis-text {
+    color: rgb(0, 0, 0);
+    padding-top: 10px;
+    padding-left: 10px;
+  }
+
+  .vis-time-axis .vis-text.vis-major {
+    font-weight: bold;
+  }
+
+  .vis-time-axis .vis-grid.vis-minor {
+    border-width: 0.5px;
+    border-color: rgba(202, 0, 94, 0.116);
+  }
+
+  .vis-time-axis .vis-grid.vis-major {
+    border-width: 0.5px;
+    border-color: rgba(202, 0, 94, 0.24);
+  }

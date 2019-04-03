@@ -26,7 +26,7 @@ class Model {
         if ($order_by == null) {
             $sql .= ';';
         } else {
-            $sql .= ' ORDER BY '.$order_by.';';
+            $sql .= ' ORDER BY '.$order_by.' ASC;';
         }
 
         //make query & get result;
@@ -36,11 +36,16 @@ class Model {
         }
         return $rows;
     }
-    public static function loadAllIdsFromTable($table) {
+    public static function loadAllIdsFromTable($table, $order_by = null) {
         $model = new Model();
         $model->connectDB();
         //write querry for all memory cards
-        $sql = 'SELECT Id FROM '. $table . ';';
+        $sql = 'SELECT Id FROM '. $table;
+        if ($order_by == null) {
+            $sql .= ';';
+        } else {
+            $sql .= ' ORDER BY '.$order_by.' ASC;';
+        }
 
         //make query & get result;
         $result = mysqli_query($model->conn, $sql);
@@ -52,6 +57,15 @@ class Model {
         }
         return $rows;
     }
+
+    public static function deleteFromTable($table, $id){
+        $model = new Model();
+        $model->connectDB();
+        // assert($id != null);
+         //query to delete rows into a table by id
+        $sql = 'DELETE FROM '. $table. ' WHERE Id = '.$id;
+        mysqli_query($model->conn, $sql);
+     }
 
     public function loadFromTable($table, $id, $columns) {
         assert($id != null);
@@ -134,13 +148,6 @@ class Model {
         }
     }
 
-    public function deleteFromTable($table, $id){
-       // assert($id != null);
-        $this->connectDB();
-        //query to delete rows into a table by id
-        $sql = 'DELETE FROM '. $table. ' WHERE Id = '.$id;
-        mysqli_query($this->conn, $sql);
-    }
 
 }   
 

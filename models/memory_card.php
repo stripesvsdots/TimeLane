@@ -34,7 +34,7 @@ class MemoryCard extends Model {
     }
 
     public static function deleteMemoryCardFromDB($id) {
-        deleteFromTable('MemoryCards', $id);
+        Model::deleteFromTable('MemoryCards', $id);
     }
 
     public function loadFromDB() {
