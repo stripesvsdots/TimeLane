@@ -93,9 +93,6 @@ class Model {
         }
 
         if ($result->num_rows === 0) {
-            // Oh, no rows! Sometimes that's expected and okay, sometimes
-            // it is not. You decide. In this case, maybe actor_id was too
-            // large? 
             echo "We could not find a match for Id $id, sorry about that. Please try again.";
             return;
         }

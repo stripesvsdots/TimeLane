@@ -10,8 +10,8 @@
 </head>
 <body>
 <?php
-var_dump($_POST);
-    require('./controller/memory_card_controller.php');
+    var_dump($_POST);
+    require_once('./controller/memory_card_controller.php');
     $memoryController = new MemoryController;
     $memoryController->createMemoryCardFromPOST($_POST);
 ?>

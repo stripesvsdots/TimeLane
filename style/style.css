@@ -50,3 +50,10 @@
     border-width: 0.5px;
     border-color: rgba(202, 0, 94, 0.24);
   }
+  
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}

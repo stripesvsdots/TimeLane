@@ -29,10 +29,13 @@
         <br>
 
         <div class="row">
-            <h4 class="blue-grey-text text-darken-2"> Please register </h6>
+        <div class = "card col s6 m4">
+      
+            <h5 class="blue-grey-text text-darken-2"> Create account </h5>
+        </div>
         </div>
 
-        <form class="col s8" method="POST" action="validate_register.php"  onsubmit="checkForm(this);">
+        <form class="col s6" method="POST" action="validate_register.php"  onsubmit="checkForm(this);" autocomplete = "off">
             <div class="row">
                 <div class="input-field hoverable col s6">
                     <i class="material-icons prefix">contacts</i>
@@ -103,7 +106,7 @@ function checkForm(form)
     }
 
     // regular expression to match only alphanumeric characters and spaces
-    var re = /^[\w ]+$/;
+    let re = /^[\w ]+$/;
 
     // validation fails if the input doesn't match our regular expression
     if(!re.test(form.inputfield.value)) {

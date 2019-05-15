@@ -1,6 +1,6 @@
 <?php
     //var_dump($_GET);
-    require('./controller/memory_card_controller.php');
+    require_once('./controller/memory_card_controller.php');
 
     $card_id = $_GET['id'];
     $memoryController = new MemoryController;

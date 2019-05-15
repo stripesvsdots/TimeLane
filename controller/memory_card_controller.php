@@ -1,4 +1,5 @@
 <?php 
+    require ('./validate_session.php');
     require ('./models/memory_card.php');
 
     class MemoryController {
@@ -13,15 +14,13 @@
             $card->title = $postData['title'];
             $card->note = $postData['note'];
             $card->event_date = strtotime($postData['event_date']);
-            $card->user_id = '1'; //the logged in user id
+            $card->user_id = $loggedInUser->id;
             $card->event_id = $postData['events'];
     
             $card->saveToDB();
 
             $cards = MemoryCard::loadAllMemoryCardsFromDB();
             require ('views/memory_card_view.php');
-
-            
         }
         
 
