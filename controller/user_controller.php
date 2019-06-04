@@ -15,7 +15,8 @@
             $user->password =md5(htmlspecialchars($postData['password'], ENT_QUOTES, "ISO-8859-1"));
             $user->saveToDB();
             $_SESSION['userId'] = $user->id;
-            //add sessionId here
+            $_SESSION['id'] = session_id();
+            
 
             //require ('views/user_view.php');
 
@@ -27,8 +28,10 @@
             $user = new User();
             $email = filter_var($postData['email'], FILTER_SANITIZE_EMAIL);     
             $password = md5(htmlspecialchars($postData['password'], ENT_QUOTES, "ISO-8859-1"));
-        
-            if ( $user->login( $email, $password))  {  
+            $sessionId = session_id();
+            var_dump($sessionId);
+
+            if ( $user->login( $email, $password, $sessionId))  {  
                 echo ("succes!");
                 $_SESSION['userId'] = $user->id;
                 return true;
@@ -38,7 +41,7 @@
         
         public function validateUserSession() {
             $userId = $_SESSION['userId'];
-            $sessionId = 0;//$_SESSION['userId']; //ADD ME
+            $sessionId = session_id();
             $user = new User();
             if ($user->validateSession($userId, $sessionId ) == true) {
                 return $user;

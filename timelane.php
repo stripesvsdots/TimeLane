@@ -1,5 +1,5 @@
 <?php
-   require ('./validate_session.php');
+   require_once('./validate_session.php');
  ?>
 
 <!DOCTYPE html>
@@ -19,9 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 
-    <title><?php 
-    $title = 'home';
-    if(isset($title)){ echo $title; }?></title>
+  
 
 </head>
 
@@ -43,9 +41,8 @@
     <?php
 
     require_once('./controller/memory_card_controller.php');
-    $memoryController = new MemoryController;
-    $memoryController->index();   
-    
+    $controller = new MemoryCardController;
+    $controller->index();   
 ?>
     <div class=" row center-align" style = "margin-top: 20px;">
         <a class="btn-floating btn-large waves-effect waves-light pink darken-2 " href="form.php"><i
@@ -59,3 +56,4 @@
 </body>
 
 </html>
+

@@ -1,28 +1,27 @@
 <?php 
-    require ('./validate_session.php');
-    require ('./models/memory_card.php');
+    require_once('./validate_session.php');
+    require_once('./models/memory_card.php');
 
-    class MemoryController {
+
+    class MemoryCardController {
         public function index() {
            $cards = MemoryCard::loadAllMemoryCardsFromDB();
-           require ('views/memory_card_view.php');
+           require_once('views/timeline_view.php');
         }
 
-        public function createMemoryCardFromPOST($postData){
+        public function createMemoryCardFromPOST($postData) {
+            global $USER;
+
             $card = new MemoryCard();
             //get data from form
             $card->title = $postData['title'];
             $card->note = $postData['note'];
             $card->event_date = strtotime($postData['event_date']);
-            $card->user_id = $loggedInUser->id;
+            $card->user_id = $USER->id;
             $card->event_id = $postData['events'];
-    
-            $card->saveToDB();
-
-            $cards = MemoryCard::loadAllMemoryCardsFromDB();
-            require ('views/memory_card_view.php');
+            var_dump($card);
+            return $card->saveToDB();
         }
-        
 
         public function deleteMemoryCard($id){
             MemoryCard::deleteMemoryCardFromDB($id);

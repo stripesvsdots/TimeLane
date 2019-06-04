@@ -57,11 +57,10 @@ class MemoryCard extends Model {
 
         if ($this->id == null) {
             $this->id = $this->insertIntoTable('MemoryCards', $columns);
-            return ;
+            return $this->id != null ;
         } 
         
-        $this->updateToTable('MemoryCards', $this->id, $columns);
-        
+        return $this->updateToTable('MemoryCards', $this->id, $columns);
     }
 
     public function deleteFromDB() {

@@ -131,17 +131,20 @@ class Model {
         $this->connectDB();
         //write querry to save data
         $query = 'UPDATE '. $table. ' SET ';
-
+    
         foreach($columns as $column => $value){
-            $query .= $table . '.' . $column . ' = ' . $value . ', ';
+            $query .= $table . "." . $column . "='". $value . "',";
         } 
         $query = rtrim($query, ",");
+        $query .= ' WHERE Id='.$id;
         $query .= ';';
+        var_dump($query);
 
-        if (mysqli_query($this->conn, $query)){
-    
+        if (mysqli_query($this->conn, $query)) {
+            return true;
         } else{
             echo "ERROR: Could not able to execute $query. " . mysqli_error($this->conn);
+            return false;
         }
     }
 

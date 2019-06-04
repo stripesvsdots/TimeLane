@@ -1,10 +1,13 @@
 <?php
+    session_start();
 	require_once('./controller/user_controller.php');
 	$userController = new UserController;
-	$loggedInUser = $userController->validateUserSession();
-	if ($loggedInUser == null)
+
+	global $USER;
+	$USER = $userController->validateUserSession();
+	if ($USER == null)
 	{
-		die("not logged in");
-		//add redirect to login
+		header("Location: login_form.php?error='Invalid session'");
+		die();
 	}
 ?>

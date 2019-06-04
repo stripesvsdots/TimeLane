@@ -9,7 +9,7 @@ class User extends Model {
 	public $birthday = '';
 	public $email = '';
     public $password = '';
-    public $sessionId = 0;
+    public $sessionId = '';
     
     public function associateWithDB($id) {
         $this->id = $id;
@@ -34,18 +34,22 @@ class User extends Model {
         $this->lastName = $columns['Lastname'];
         $this->birthday = $columns['Birthday'];
         $this->email = $columns['Email'];    
+        $this->sessionId = $columns['SessionId'];
+        $this->password = $columns['Password'];
     }
 
-    public function login($email, $password) {
+    public function login($email, $password, $sessionId) {
         $this->connectDB();
         $result = $this->conn->query("SELECT * FROM Users WHERE Email = '$email' AND Password = '$password'") or die ($this->conn->error());
-        var_dump ($password);
         if ($result->num_rows === 0) {
             print_r($result);
             return false;
         }
         $data = $result->fetch_assoc();
         $this->loadFromColumns($data);
+        $this->sessionId = $sessionId;
+        $this->saveToDB();
+        print_r($result);
         return true;
 	}
 
@@ -60,7 +64,8 @@ class User extends Model {
             'Lastname' => $this->lastName,
             'Birthday' => date("Y-m-d H:i:s", $this->birthday),
             'Email' => $this->email,
-            'Password' => $this->password
+            'Password' => $this->password,
+            'SessionId' => $this->sessionId
         ];
         if ($this->id == null) {
             $this->id = $this->insertIntoTable('Users', $columns);

@@ -12,8 +12,12 @@
 <?php
     var_dump($_POST);
     require_once('./controller/memory_card_controller.php');
-    $memoryController = new MemoryController;
-    $memoryController->createMemoryCardFromPOST($_POST);
+    $controller = new MemoryCardController;
+    if ($controller->createMemoryCardFromPOST($_POST))
+	{
+        header('Location: timelane.php');
+    }
+    die("error");
 ?>
     
 </body>

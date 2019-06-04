@@ -1,6 +1,4 @@
-<?php
-   require ('./validate_session.php');
- ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,6 +30,7 @@
     </div>
   </nav>
 
+  Apache/2.4.34 (Ubuntu) Server at localhost Port 80
 
 
     <div class="section">

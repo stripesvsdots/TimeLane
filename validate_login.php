@@ -1,5 +1,4 @@
 <?php
-	var_dump($_POST);
 	require_once('./controller/user_controller.php');
 	$userController = new UserController;
 	if ($userController->validateUserLogin($_POST) == false)
@@ -8,5 +7,6 @@
 		//show the error to the user
 		header('Location: login.php?error=true');
 	}
-	header('Location: profile.php');
+	
+	header('Location: timelane.php');
 ?>

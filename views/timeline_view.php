@@ -7,15 +7,27 @@
 
         <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>    
+
+     <!-- Compiled and minified JavaScript -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="./style/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>        
+
+
 </head>
 
 <body>
+
+
+
+<div class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</div>
+
     <div id="visualization">
         <div class="vis-timeline vis-bottom">
             <div class="vis-panel vis-bottom" style="width: 962px; left: -1px; top: 343px;">
@@ -25,7 +37,13 @@
             </div>
         </div>
     </div>
+ 
+
+
+
     <script type="text/javascript">
+
+
         function prettyConfirm(title, text, callback) {
             swal({
                 title: title,
@@ -42,7 +60,7 @@
         // Create a DataSet (allows two way data-binding)
         var items = new vis.DataSet([
             <?php 
-            require_once('./models/event.php');
+        require_once('./models/event.php');
             
             //displaying the data from DB
             foreach($cards as $card) {
@@ -50,8 +68,7 @@
                 echo '{ id: '.$card->id.', ';
                 echo 'start: "'.date('Y-m-d', $card->event_date).'", ';
                 echo 'content:\'<div>'.$card->title.'</div><img src="'.$event->img_url.'" style="width:32px; height:32px;">\'';
-                echo '}, ';
-                    
+                echo '}, ';                   
                 }
             ?>
         ]);
@@ -59,8 +76,6 @@
             $startDate = time();
             $endDate = $startDate;
 
-           
-            
             if (count($cards) > 0) {
                 $startDate = reset($cards)->event_date;
                 $endDate = end($cards)->event_date;
@@ -77,10 +92,14 @@
             editable: true,
             start: '<?php echo date('Y-m-d', $startDate) ?>',
             end: '<?php echo date('Y-m-d', $endDate) ?>',
+ 
             onRemove: function (item, callback) {
-                //prettyConfirm('Remove item', 'Do you really want to remove item ' + item.content + '?', function () {
-                    if (true) {
-                        //$.ajax
+                swal({
+                    title: "Are you sure you want to do this?", 
+                    buttons: ["Oh noez!", "Aww yiss!"]
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
                         $.ajax({
                             url: "delete.php?id=" + item.id
                         }).done(function( msg ) {
@@ -94,12 +113,40 @@
                     } else {
                         callback(null); // cancel deletion
                     }
-                //});
+                });
             }
         };
         // Create a Timeline
         var timeline = new vis.Timeline(container, items, options);
+      
+        timeline.on('select', function (properties) {
+            //alert('selected items: ' + properties.items);
+            console.log(properties);
+            if (properties.items.length == 1) {
+                $('#modal-show-event').modal('open');
+                $('#modal-show-event-content').load("view_memory_card.php?card_id=" + properties.items[0]);
+            }
+        });
+
+        //initialize the modal stuff
+        $( document ).ready(function() {
+            $('.modal').modal();
+        });
+          
     </script>
+    <!-- Modal Trigger -->
+    <!-- Modal Structure -->
+<div id="modal-show-event" class="modal">
+  <div class="modal-content">
+      <div id="modal-show-event-content">
+        <h4>Loading...</h4>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+  
 </body>
 
 </html>

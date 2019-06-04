@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,7 +50,6 @@
 <script>
 function checkLogin(form)
   {
-      console.log("miau");
     // validation fails if the input is blank
     if(form.inputfield.value == "") {
       alert("Error: Input is empty!");
